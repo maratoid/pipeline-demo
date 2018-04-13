@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    chart: "{{ .Chart.Name | trunc 30 }}-{{ .Chart.Version | replace "+" "_" | trunc 32 }}"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.images.image }}"
+        imagePullPolicy: {{ .Values.images.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.service.internalPort }}
+        env:
+          - name: SCRIPT
+            value: &initScript |-
+              #!/bin/sh
+
+              echo ".Values.pipeline.secretval = {{ .Values.pipeline.secretval }}"
+              echo ".Values.pipeline.plainval = {{ .Values.pipeline.plainval }}"
+              tail -f /dev/null
+        command: ["/bin/sh"]
+        args: ['-c', *initScript]
+        livenessProbe:
+          exec:
+            command:
+            - cat
+            - /dev/null
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:
+          exec:
+            command:
+            - cat
+            - /dev/null
+          initialDelaySeconds: 5
+          periodSeconds: 5
