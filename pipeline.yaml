@@ -18,7 +18,7 @@ envValues:
 slack:
   channel: #team-migrations
 rootfs:
-  - image: quay.io/maratoid/pipeline-demo
+  - image: maratoid/pipeline-demo
     buildArgs: 
       TEST_ARG: "something not default"
     context: pipeline-demo
