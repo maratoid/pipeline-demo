@@ -20,7 +20,7 @@ slack:
 rootfs:
   - image: maratoid/pipeline-demo
     buildArgs: 
-      TEST_ARG: "something not default"
+      TEST_ARG: "something not so default"
     context: pipeline-demo
     chart: pipeline-demo
     value: images.image
