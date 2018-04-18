@@ -15,8 +15,9 @@ envValues:
     secret: jobs/demo/demovalue
   - envVar: BUSYBOX_PLAIN_VARIABLE
     value: THIS-IS-A-DUMMY-PLAIN-VAR-FOR-TESTING
-slack:
-  channel: #team-migrations
+helmRepos:
+  - name: incubator
+    url: https://kubernetes-charts-incubator.storage.googleapis.com
 rootfs:
   - image: maratoid/pipeline-demo
     buildArgs: 
