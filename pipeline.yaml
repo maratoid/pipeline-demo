@@ -73,6 +73,6 @@ prod:
 #  afterScript:
 #    image: alpine:latest
 #    script: scripts/prodAfter.sh 
-  doDeploy: always
+  doDeploy: auto
 
  
