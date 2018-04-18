@@ -1,22 +1,23 @@
 type: chart
-beforeScript:
-  script: scripts/globalBefore.sh
-afterScript:
-  image: alpine:latest
-  script: scripts/globalAfter.sh
-pullSecrets:
-  - name: quay
-    server: quay.io
-    username: maratoid
-    email: maratoid@gmail.com
-    password: secret/pull/quay
-envValues:
-  - envVar: BUSYBOX_SECRET_VARIABLE
-    secret: jobs/demo/demovalue
-  - envVar: BUSYBOX_PLAIN_VARIABLE
-    value: THIS-IS-A-DUMMY-PLAIN-VAR-FOR-TESTING
-slack:
-  channel: #team-migrations
+#beforeScript:
+#  script: scripts/globalBefore.sh
+#afterScript:
+#  image: alpine:latest
+#  script: scripts/globalAfter.sh
+#pullSecrets:
+#  - name: quay
+#    server: quay.io
+#    username: maratoid
+#    email: maratoid@gmail.com
+#    password: secret/pull/quay
+#envValues:
+#  - envVar: BUSYBOX_SECRET_VARIABLE
+#    secret: jobs/demo/demovalue
+#  - envVar: BUSYBOX_PLAIN_VARIABLE
+#    value: THIS-IS-A-DUMMY-PLAIN-VAR-FOR-TESTING
+helmRepos:
+  - name: incubator
+    url: https://kubernetes-charts-incubator.storage.googleapis.com
 rootfs:
   - image: maratoid/pipeline-demo
     buildArgs: 
@@ -51,27 +52,27 @@ configs:
           secret: jobs/demo/demovalue
         - key: pipeline.plainval
           value: THIS-IS-A-DUMMY-PLAIN-VAR-FOR-TESTING
-test:
-  beforeScript:
-    script: scripts/testBefore.sh
-    shell: /bin/bash
-  afterScript:
-    image: alpine:latest
-    script: scripts/testAfter.sh
-stage:
-  beforeScript:
-    script: scripts/stageBefore.sh
-    shell: /bin/bash
-  afterScript:
-    image: alpine:latest
-    script: scripts/stageAfter.sh    
+# test:
+#  beforeScript:
+#    script: scripts/testBefore.sh
+#    shell: /bin/bash
+#  afterScript:
+#    image: alpine:latest
+#    script: scripts/testAfter.sh
+#stage:
+#  beforeScript:
+#    script: scripts/stageBefore.sh
+#    shell: /bin/bash
+#  afterScript:
+#    image: alpine:latest
+#    script: scripts/stageAfter.sh    
 prod: 
-  beforeScript:
-    script: scripts/prodBefore.sh
-    shell: /bin/bash
-  afterScript:
-    image: alpine:latest
-    script: scripts/prodAfter.sh 
-  doDeploy: versionfile
+#  beforeScript:
+#    script: scripts/prodBefore.sh
+#    shell: /bin/bash
+#  afterScript:
+#    image: alpine:latest
+#    script: scripts/prodAfter.sh 
+  doDeploy: auto
 
  
