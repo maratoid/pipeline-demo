@@ -8,5 +8,5 @@ spec:
   containers:
     - name: "{{.Release.Name}}-smoke-test"
       image: "{{ .Values.images.image }}"
-      command: ["sh -c 'echo logs logs logs from test-success'"]
+      command: ["true"]
   restartPolicy: Never
