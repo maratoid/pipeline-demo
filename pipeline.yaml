@@ -30,6 +30,7 @@ rootfs:
       - arg: JOB_NAME
         env: JOB_NAME
     context: pipeline-demo
+    dockerContext: .
     chart: pipeline-demo
     value: images.image
 configs:
