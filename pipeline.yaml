@@ -1,6 +1,6 @@
 type: chart
-#beforeScript:
-#  script: scripts/globalBefore.sh
+beforeScript:
+  script: scripts/globalBefore.sh
 #afterScript:
 #  image: alpine:latest
 #  script: scripts/globalAfter.sh
@@ -10,19 +10,27 @@ type: chart
 #    username: maratoid
 #    email: maratoid@gmail.com
 #    password: secret/pull/quay
-#envValues:
-#  - envVar: BUSYBOX_SECRET_VARIABLE
-#    secret: jobs/demo/demovalue
-#  - envVar: BUSYBOX_PLAIN_VARIABLE
-#    value: THIS-IS-A-DUMMY-PLAIN-VAR-FOR-TESTING
+envValues:
+  - envVar: BUSYBOX_SECRET_VARIABLE
+    secret: jobs/demo/demovalue
+  - envVar: BUSYBOX_PLAIN_VARIABLE
+    value: THIS-IS-A-DUMMY-PLAIN-VAR-FOR-TESTING
+  - envVar: GIT_COMMIT
+    env: GIT_COMMIT
+  - envVar: JOB_NAME
+    env: JOB_NAME
 helmRepos:
   - name: incubator
     url: https://kubernetes-charts-incubator.storage.googleapis.com
 rootfs:
   - image: maratoid/pipeline-demo
     buildArgs: 
-      TEST_ARG: "something not so default"
+      - arg: GIT_COMMIT
+        env: GIT_COMMIT
+      - arg: JOB_NAME
+        env: JOB_NAME
     context: pipeline-demo
+    dockerContext: .
     chart: pipeline-demo
     value: images.image
 configs:
