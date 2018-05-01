@@ -1,7 +1,7 @@
 replicaCount: 1
 pipeline: 
   secretval: set-me
-  plainvail: set-me
+  plainval: set-me
 images:
   image: quay.io/maratoid/pipeline-demo:prod
   pullPolicy: IfNotPresent
