@@ -41,13 +41,13 @@ configs:
     test: 
       values:
         - key: pipeline.secretval
-          secret: jobs/demo/demovalue
+          secret: jobs/demo/nested/test
         - key: pipeline.plainval
           value: THIS-IS-A-DUMMY-PLAIN-VAR-FOR-TESTING
     stage: 
       values:
         - key: pipeline.secretval
-          secret: jobs/demo/demovalue
+          secret: jobs/demo/nested/stage
         - key: pipeline.plainval
           value: THIS-IS-A-DUMMY-PLAIN-VAR-FOR-TESTING
       tests:
@@ -57,7 +57,7 @@ configs:
     prod: 
       values:
         - key: pipeline.secretval
-          secret: jobs/demo/demovalue
+          secret: jobs/demo/nested/prod
         - key: pipeline.plainval
           value: THIS-IS-A-DUMMY-PLAIN-VAR-FOR-TESTING
 # test:
