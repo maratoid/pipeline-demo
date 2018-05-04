@@ -22,7 +22,7 @@ envValues:
 helmRepos:
   - name: incubator
     url: https://kubernetes-charts-incubator.storage.googleapis.com
-rootfs:
+builds:
   - image: maratoid/pipeline-demo
     buildArgs: 
       - arg: GIT_COMMIT
@@ -33,7 +33,7 @@ rootfs:
     dockerContext: .
     chart: pipeline-demo
     value: images.image
-configs:
+deployments:
   - chart: pipeline-demo
     timeout: 600
     retries: 2
@@ -60,27 +60,27 @@ configs:
           secret: jobs/demo/nested/prod
         - key: pipeline.plainval
           value: THIS-IS-A-DUMMY-PLAIN-VAR-FOR-TESTING
-# test:
-#  beforeScript:
-#    script: scripts/testBefore.sh
-#    shell: /bin/bash
-#  afterScript:
-#    image: alpine:latest
-#    script: scripts/testAfter.sh
-#stage:
-#  beforeScript:
-#    script: scripts/stageBefore.sh
-#    shell: /bin/bash
-#  afterScript:
-#    image: alpine:latest
-#    script: scripts/stageAfter.sh    
+test:
+  beforeScript:
+    script: scripts/testBefore.sh
+    shell: /bin/bash
+  afterScript:
+    image: alpine:latest
+    script: scripts/testAfter.sh
+stage:
+  beforeScript:
+    script: scripts/stageBefore.sh
+    shell: /bin/bash
+  afterScript:
+    image: alpine:latest
+    script: scripts/stageAfter.sh    
 prod: 
-#  beforeScript:
-#    script: scripts/prodBefore.sh
-#    shell: /bin/bash
-#  afterScript:
-#    image: alpine:latest
-#    script: scripts/prodAfter.sh 
-  doDeploy: auto
+  beforeScript:
+    script: scripts/prodBefore.sh
+    shell: /bin/bash
+  afterScript:
+    image: alpine:latest
+    script: scripts/prodAfter.sh 
+  doDeploy: none
 
  
