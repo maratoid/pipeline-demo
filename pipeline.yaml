@@ -56,6 +56,10 @@ deployments:
           value: pipelinedemo.staging.cnct.io
         - key: secret
           value: pipelinedemo-stage-secret
+        - key: secondHost
+          value: 
+        - key: secondSecret
+          value: 
       tests:
         - image: bash:latest
           script: scripts/stageTest.sh
@@ -72,21 +76,32 @@ deployments:
           value: pipelinedemo.prod.cnct.io
         - key: secret
           value: pipelinedemo-prod-secret
+        - key: secondHost
+          value: pipelinealt.cnct.io
+        - key: secondSecret
+          value: pipelinedemo-cnct-secret
 tls:
   staging:
-    name: pipelinedemo-stage-cert
-    secretName: pipelinedemo-stage-secret
-    dnsNames:
-      - pipelinedemo.staging.cnct.io
-    domains:
-      - pipelinedemo.staging.cnct.io
+    - name: pipelinedemo-stage-cert
+      secretName: pipelinedemo-stage-secret
+      dnsNames:
+        - pipelinedemo.staging.cnct.io
+      domains:
+        - pipelinedemo.staging.cnct.io
   prod:
-    name: pipelinedemo-prod-cert
-    secretName: pipelinedemo-prod-secret
-    dnsNames:
-      - pipelinedemo.prod.cnct.io
-    domains:
-      - pipelinedemo.prod.cnct.io
+    - name: pipelinedemo-prod-cert
+      secretName: pipelinedemo-prod-secret
+      dnsNames:
+        - pipelinedemo.prod.cnct.io
+      domains:
+        - pipelinedemo.prod.cnct.io
+    - name: pipelinedemo-cnct-cert
+      issuer: pipeline-cnct-issuer
+      secretName: pipelinedemo-cnct-secret
+      dnsNames:
+        - pipelinealt.cnct.io
+      domains:
+        - pipelinealt.cnct.io
 test:
   beforeScript:
     script: scripts/testBefore.sh

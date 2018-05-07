@@ -1,6 +1,8 @@
 replicaCount: 1
 host: pipelinedemo.prod.cnct.io
 secret: pipelinedemo-prod-secret
+secondHost: pipelinealt.cnct.io
+secondSecret: pipelinedemo-cnct-secret
 ingressEnabled: false
 pipeline: 
   secretval: set-me

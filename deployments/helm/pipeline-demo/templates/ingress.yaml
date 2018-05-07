@@ -14,8 +14,22 @@ spec:
           serviceName: {{ template "fullname" . }}
           servicePort: {{ .Values.service.externalPort }}
         path: /
+{{- if .Values.secondHost }}
+  - host: {{ .Values.secondHost }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ template "fullname" . }}
+          servicePort: {{ .Values.service.externalPort }}
+        path: /
+{{- end }}
   tls:
   - hosts:
     - {{ .Values.host }}
     secretName: {{ .Values.secret }}
+{{- if .Values.secondHost }}
+  - hosts:
+    - {{ .Values.secondHost }}
+    secretName: {{ .Values.secondSecret }}
+{{- end }}
 {{- end }}
