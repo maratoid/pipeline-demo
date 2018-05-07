@@ -50,6 +50,12 @@ deployments:
           secret: jobs/demo/nested/stage
         - key: pipeline.plainval
           value: THIS-IS-A-DUMMY-PLAIN-VAR-FOR-TESTING
+        - key: ingressEnabled
+          value: true
+        - key: host
+          value: pipelinedemo.staging.cnct.io
+        - key: secret
+          value: pipelinedemo-stage-secret
       tests:
         - image: bash:latest
           script: scripts/stageTest.sh
@@ -60,6 +66,27 @@ deployments:
           secret: jobs/demo/nested/prod
         - key: pipeline.plainval
           value: THIS-IS-A-DUMMY-PLAIN-VAR-FOR-TESTING
+        - key: ingressEnabled
+          value: true
+        - key: host
+          value: pipelinedemo.prod.cnct.io
+        - key: secret
+          value: pipelinedemo-prod-secret
+tls:
+  stage:
+    name: pipelinedemo-stage-cert
+    secretName: pipelinedemo-stage-secret
+    dnsNames:
+      - pipelinedemo.staging.cnct.io
+    domains:
+      - pipelinedemo.staging.cnct.io
+  prod:
+    name: pipelinedemo-prod-cert
+    secretName: pipelinedemo-prod-secret
+    dnsNames:
+      - pipelinedemo.prod.cnct.io
+    domains:
+      - pipelinedemo.prod.cnct.io
 test:
   beforeScript:
     script: scripts/testBefore.sh

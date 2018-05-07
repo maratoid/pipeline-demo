@@ -24,7 +24,7 @@ spec:
 
               echo ".Values.pipeline.secretval = {{ .Values.pipeline.secretval }}"
               echo ".Values.pipeline.plainval = {{ .Values.pipeline.plainval }}"
-              tail -f /dev/null
+              gunicorn -b 0.0.0.0:{{ .Values.service.internalPort }} httpbin:app
         command: ["/bin/sh"]
         args: ['-c', *initScript]
         livenessProbe:
