@@ -95,6 +95,7 @@ test:
     image: alpine:latest
     script: scripts/testAfter.sh
 stage:
+  deploy: true
   beforeScript:
     script: scripts/stageBefore.sh
     shell: /bin/bash
@@ -108,6 +109,6 @@ prod:
   afterScript:
     image: alpine:latest
     script: scripts/prodAfter.sh 
-  doDeploy: none
+  doDeploy: auto
 
  
