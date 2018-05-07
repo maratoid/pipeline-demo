@@ -73,7 +73,7 @@ deployments:
         - key: secret
           value: pipelinedemo-prod-secret
 tls:
-  stage:
+  staging:
     name: pipelinedemo-stage-cert
     secretName: pipelinedemo-stage-secret
     dnsNames:
