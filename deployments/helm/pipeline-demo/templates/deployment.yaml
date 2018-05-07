@@ -24,7 +24,7 @@ spec:
 
               echo ".Values.pipeline.secretval = {{ .Values.pipeline.secretval }}"
               echo ".Values.pipeline.plainval = {{ .Values.pipeline.plainval }}"
-              gunicorn -b 0.0.0.0:{{ .Values.service.internalPort }} httpbin:app
+              tail -f /dev/null
         command: ["/bin/sh"]
         args: ['-c', *initScript]
         livenessProbe:
@@ -41,3 +41,9 @@ spec:
             - /dev/null
           initialDelaySeconds: 5
           periodSeconds: 5
+      - name: httpbin
+        image: kennethreitz/httpbin:latest
+        imagePullPolicy: {{ .Values.images.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.service.internalPort }}
+        command: ["gunicorn", "-b", "0.0.0.0:{{ .Values.service.internalPort }}", "httpbin:app"]
