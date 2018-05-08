@@ -88,23 +88,14 @@ tls:
   staging:
     - name: pipelinedemo-staging-cert
       secretName: pipelinedemo-staging-secret
-      dnsNames:
-        - pipelinedemo.staging.cnct.io
-      domains:
-        - pipelinedemo.staging.cnct.io
+      dnsName: pipelinedemo.staging.cnct.io
   prod:
     - name: pipelinedemo-prod-cert
       secretName: pipelinedemo-prod-secret
-      dnsNames:
-        - pipelinedemo.prod.cnct.io
-      domains:
-        - pipelinedemo.prod.cnct.io
+      dnsName: pipelinedemo.prod.cnct.io
     - name: pipelinedemo-friendly-cert
       secretName: pipelinedemo-friendly-secret
-      dnsNames:
-        - pipelinealt.cnct.io
-      domains:
-        - pipelinealt.cnct.io
+      dnsName: pipelinealt.cnct.io
 test:
   beforeScript:
     script: scripts/testBefore.sh
