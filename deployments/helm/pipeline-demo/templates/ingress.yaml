@@ -13,7 +13,7 @@ spec:
       paths:
       - backend:
           serviceName: {{ template "fullname" $ }}
-          servicePort: {{ .Values.service.externalPort }}
+          servicePort: {{ $.Values.service.externalPort }}
         path: {{ .path }}
   tls:
   - hosts:
