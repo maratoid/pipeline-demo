@@ -50,6 +50,14 @@ deployments:
           secret: jobs/demo/nested/stage
         - key: pipeline.plainval
           value: THIS-IS-A-DUMMY-PLAIN-VAR-FOR-TESTING
+        - key: ingress.staging.name
+          value: pipelinedemo-staging-ingress
+        - key: ingress.staging.host
+          value: pipelinedemo.staging.cnct.io
+        - key: ingress.staging.secret
+          value: pipelinedemo-staging-secret
+        - key: ingress.staging.path
+          value: /
       tests:
         - image: bash:latest
           script: scripts/stageTest.sh
@@ -60,6 +68,43 @@ deployments:
           secret: jobs/demo/nested/prod
         - key: pipeline.plainval
           value: THIS-IS-A-DUMMY-PLAIN-VAR-FOR-TESTING
+        - key: ingress.prod.name
+          value: pipelinedemo-prod-ingress
+        - key: ingress.prod.host
+          value: pipelinedemo.prod.cnct.io
+        - key: ingress.prod.secret
+          value: pipelinedemo-prod-secret
+        - key: ingress.prod.path
+          value: /
+        - key: ingress.friendly.name
+          value: pipelinedemo-friendly-ingress
+        - key: ingress.friendly.host
+          value: pipelinealt.cnct.io
+        - key: ingress.friendly.secret
+          value: pipelinedemo-friendly-secret
+        - key: ingress.friendly.path
+          value: /
+tls:
+  staging:
+    - name: pipelinedemo-staging-cert
+      secretName: pipelinedemo-staging-secret
+      dnsNames:
+        - pipelinedemo.staging.cnct.io
+      domains:
+        - pipelinedemo.staging.cnct.io
+  prod:
+    - name: pipelinedemo-prod-cert
+      secretName: pipelinedemo-prod-secret
+      dnsNames:
+        - pipelinedemo.prod.cnct.io
+      domains:
+        - pipelinedemo.prod.cnct.io
+    - name: pipelinedemo-friendly-cert
+      secretName: pipelinedemo-friendly-secret
+      dnsNames:
+        - pipelinealt.cnct.io
+      domains:
+        - pipelinealt.cnct.io
 test:
   beforeScript:
     script: scripts/testBefore.sh
@@ -68,6 +113,7 @@ test:
     image: alpine:latest
     script: scripts/testAfter.sh
 stage:
+  deploy: true
   beforeScript:
     script: scripts/stageBefore.sh
     shell: /bin/bash
@@ -81,6 +127,6 @@ prod:
   afterScript:
     image: alpine:latest
     script: scripts/prodAfter.sh 
-  doDeploy: none
+  doDeploy: auto
 
  

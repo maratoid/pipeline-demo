@@ -1,4 +1,14 @@
 replicaCount: 1
+# ingress set as:
+# internal-ingress:
+#   name: internal-prod-ingress
+#   key: val
+#   otherkey: val
+# friendlyname:
+#   name: friendly-name-ingress
+#   key: val
+#   otherkey: val
+ingress: {}
 pipeline: 
   secretval: set-me
   plainval: set-me
@@ -9,7 +19,7 @@ service:
   name: busybox
   type: ClusterIP
   externalPort: 80
-  internalPort: 80
+  internalPort: 8080
 resources:
   limits:
     cpu: 100m

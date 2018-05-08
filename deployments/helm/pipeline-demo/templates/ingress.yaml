@@ -1,0 +1,22 @@
+{{- range .Values.ingress }}
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: pipeline-nginx
+  name: {{ .name }}
+spec:
+  rules:
+  - host: {{ .host }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ template "fullname" $ }}
+          servicePort: {{ $.Values.service.externalPort }}
+        path: {{ .path }}
+  tls:
+  - hosts:
+    - {{ .host }}
+    secretName: {{ .secret }}
+{{- end }}
