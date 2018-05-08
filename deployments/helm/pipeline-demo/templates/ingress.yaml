@@ -1,35 +1,22 @@
-{{- if .Values.ingressEnabled }}
+{{- range .Values.ingress }}
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: pipeline-nginx
-  name: {{ template "fullname" . }}
+  name: {{ .name }}
 spec:
   rules:
-  - host: {{ .Values.host }}
+  - host: {{ .host }}
     http:
       paths:
       - backend:
           serviceName: {{ template "fullname" . }}
           servicePort: {{ .Values.service.externalPort }}
-        path: /
-{{- if .Values.secondHost }}
-  - host: {{ .Values.secondHost }}
-    http:
-      paths:
-      - backend:
-          serviceName: {{ template "fullname" . }}
-          servicePort: {{ .Values.service.externalPort }}
-        path: /
-{{- end }}
+        path: {{ .path }}
   tls:
   - hosts:
-    - {{ .Values.host }}
-    secretName: {{ .Values.secret }}
-{{- if .Values.secondHost }}
-  - hosts:
-    - {{ .Values.secondHost }}
-    secretName: {{ .Values.secondSecret }}
-{{- end }}
+    - {{ .host }}
+    secretName: {{ .secret }}
 {{- end }}

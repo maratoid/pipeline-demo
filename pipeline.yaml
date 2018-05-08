@@ -50,16 +50,14 @@ deployments:
           secret: jobs/demo/nested/stage
         - key: pipeline.plainval
           value: THIS-IS-A-DUMMY-PLAIN-VAR-FOR-TESTING
-        - key: ingressEnabled
-          value: true
-        - key: host
+        - key: ingress.staging.name
+          value: pipelinedemo-staging-ingress
+        - key: ingress.staging.host
           value: pipelinedemo.staging.cnct.io
-        - key: secret
-          value: pipelinedemo-stage-secret
-        - key: secondHost
-          value: 
-        - key: secondSecret
-          value: 
+        - key: ingress.staging.secret
+          value: pipelinedemo-staging-secret
+        - key: ingress.staging.path
+          value: /
       tests:
         - image: bash:latest
           script: scripts/stageTest.sh
@@ -70,20 +68,26 @@ deployments:
           secret: jobs/demo/nested/prod
         - key: pipeline.plainval
           value: THIS-IS-A-DUMMY-PLAIN-VAR-FOR-TESTING
-        - key: ingressEnabled
-          value: true
-        - key: host
+        - key: ingress.prod.name
+          value: pipelinedemo-prod-ingress
+        - key: ingress.prod.host
           value: pipelinedemo.prod.cnct.io
-        - key: secret
+        - key: ingress.prod.secret
           value: pipelinedemo-prod-secret
-        - key: secondHost
+        - key: ingress.prod.path
+          value: /
+        - key: ingress.friendly.name
+          value: pipelinedemo-friendly-ingress
+        - key: ingress.friendly.host
           value: pipelinealt.cnct.io
-        - key: secondSecret
-          value: pipelinedemo-cnct-secret
+        - key: ingress.friendly.secret
+          value: pipelinedemo-friendly-secret
+        - key: ingress.friendly.path
+          value: /
 tls:
   staging:
-    - name: pipelinedemo-stage-cert
-      secretName: pipelinedemo-stage-secret
+    - name: pipelinedemo-staging-cert
+      secretName: pipelinedemo-staging-secret
       dnsNames:
         - pipelinedemo.staging.cnct.io
       domains:
@@ -95,9 +99,8 @@ tls:
         - pipelinedemo.prod.cnct.io
       domains:
         - pipelinedemo.prod.cnct.io
-    - name: pipelinedemo-cnct-cert
-      issuer: pipeline-cnct-issuer
-      secretName: pipelinedemo-cnct-secret
+    - name: pipelinedemo-friendly-cert
+      secretName: pipelinedemo-friendly-secret
       dnsNames:
         - pipelinealt.cnct.io
       domains:

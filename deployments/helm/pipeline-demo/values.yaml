@@ -1,9 +1,14 @@
 replicaCount: 1
-host: pipelinedemo.prod.cnct.io
-secret: pipelinedemo-prod-secret
-secondHost: pipelinealt.cnct.io
-secondSecret: pipelinedemo-cnct-secret
-ingressEnabled: false
+# ingress set as:
+# internal-ingress:
+#   name: internal-prod-ingress
+#   key: val
+#   otherkey: val
+# friendlyname:
+#   name: friendly-name-ingress
+#   key: val
+#   otherkey: val
+ingress: {}
 pipeline: 
   secretval: set-me
   plainval: set-me
