@@ -97,6 +97,7 @@ tls:
       secretName: pipelinedemo-friendly-secret
       dnsName: pipelinealt.cnct.io
 test:
+  cluster: secret/test-cluster/config
   beforeScript:
     script: scripts/testBefore.sh
     shell: /bin/bash
@@ -104,6 +105,7 @@ test:
     image: alpine:latest
     script: scripts/testAfter.sh
 stage:
+  cluster: secret/staging-cluster/config
   deploy: true
   beforeScript:
     script: scripts/stageBefore.sh
@@ -112,6 +114,7 @@ stage:
     image: alpine:latest
     script: scripts/stageAfter.sh    
 prod: 
+  cluster: secret/prod-cluster/config
   beforeScript:
     script: scripts/prodBefore.sh
     shell: /bin/bash
