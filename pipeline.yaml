@@ -23,6 +23,13 @@ helmRepos:
   - name: incubator
     url: https://kubernetes-charts-incubator.storage.googleapis.com
 builds:
+  - image: maven:3.5.3
+    script: mvn.sh
+    commands: mvn --version
+    shell: /bin/bash
+  - image: maven:3.5.3
+    script: mvn.sh
+    shell: /bin/bash
   - image: maratoid/pipeline-demo
     buildArgs: 
       - arg: GIT_COMMIT
@@ -61,7 +68,7 @@ deployments:
       tests:
         - image: bash:latest
           script: scripts/stageTest.sh
-          shell: /bin/bash
+          shell: /bin/ 
     prod: 
       values:
         - key: pipeline.secretval
@@ -105,15 +112,29 @@ test:
     image: alpine:latest
     script: scripts/testAfter.sh
 stage:
+  namespace: staging
   cluster: secret/staging-cluster/config
   deploy: true
-  beforeScript:
-    script: scripts/stageBefore.sh
-    shell: /bin/bash
+#  beforeScript:
+#    script: scripts/stageBefore.sh
+#    shell: /bin/bash
   afterScript:
     image: alpine:latest
-    script: scripts/stageAfter.sh    
+    commands: |
+      echo "THIS IS STAGE AFTER SCRIPT EXECUTING"
+      echo "INJECTED VARS"
+      echo "BUSYBOX_SECRET_VARIABLE is $BUSYBOX_SECRET_VARIABLE"
+      echo "BUSYBOX_PLAIN_VARIABLE is $BUSYBOX_PLAIN_VARIABLE"
+
+      echo "PIPELINE VARIABLES"
+      echo "PIPELINE_PROD_NAMESPACE is $PIPELINE_PROD_NAMESPACE"
+      echo "PIPELINE_STAGE_NAMESPACE is $PIPELINE_STAGE_NAMESPACE"
+      echo "PIPELINE_BUILD_ID is $PIPELINE_BUILD_ID"
+      echo "PIPELINE_JOB_NAME is $PIPELINE_JOB_NAME"
+      echo "PIPELINE_BUILD_NUMBER is $PIPELINE_BUILD_NUMBER"
+      echo "PIPELINE_WORKSPACE is $PIPELINE_WORKSPACE"   
 prod: 
+  namespace: prod
   cluster: secret/prod-cluster/config
   beforeScript:
     script: scripts/prodBefore.sh
