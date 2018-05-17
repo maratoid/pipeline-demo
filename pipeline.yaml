@@ -23,12 +23,12 @@ helmRepos:
   - name: incubator
     url: https://kubernetes-charts-incubator.storage.googleapis.com
 builds:
-  - image: maven:3.5.3
-    script: mvn.sh
-    commands: mvn --version
+  - image: bash:latest
+    script: generatefile.sh
     shell: /bin/bash
-  - image: maven:3.5.3
-    script: mvn.sh
+  - image: bash:latest
+    commands: |
+      echo "test from inline" > testfrominline.txt
     shell: /bin/bash
   - image: maratoid/pipeline-demo
     buildArgs: 
