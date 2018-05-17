@@ -68,7 +68,10 @@ deployments:
       tests:
         - image: bash:latest
           script: scripts/stageTest.sh
-          shell: /bin/ 
+        - image: quay.io/maratoid/helm:latest
+          commands: |
+            kubectl version
+            kubectl get po -n pipeline-tools
     prod: 
       values:
         - key: pipeline.secretval
