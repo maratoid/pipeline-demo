@@ -24,7 +24,7 @@ helmRepos:
     url: https://kubernetes-charts-incubator.storage.googleapis.com
 builds:
   - image: bash:latest
-    script: generatefile.sh
+    script: scripts/generatefile.sh
     shell: /bin/bash
   - image: bash:latest
     commands: |
