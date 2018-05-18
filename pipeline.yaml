@@ -28,7 +28,7 @@ builds:
     shell: /bin/bash
   - image: bash:latest
     commands: |
-      echo "echo \"test from inline: running in ${PIPELINE_WORKSPACE}\" > testfrominline.sh
+      echo "echo \"test from inline: running in ${PIPELINE_WORKSPACE}\"" > testfrominline.sh
     shell: /bin/bash
   - image: maratoid/pipeline-demo
     buildArgs: 
