@@ -1,1 +1,1 @@
-echo "test from script" > testfromscript.txt
+echo "echo \"test from script: running in ${PIPELINE_WORKSPACE}\"" > testfromscript.sh

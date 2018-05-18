@@ -1,15 +1,15 @@
 type: chart
 beforeScript:
   script: scripts/globalBefore.sh
-#afterScript:
-#  image: alpine:latest
-#  script: scripts/globalAfter.sh
-#pullSecrets:
-#  - name: quay
-#    server: quay.io
-#    username: maratoid
-#    email: maratoid@gmail.com
-#    password: secret/pull/quay
+afterScript:
+  image: alpine:latest
+  script: scripts/globalAfter.sh
+pullSecrets:
+  - name: quay
+    server: quay.io
+    username: maratoid
+    email: maratoid@gmail.com
+    password: secret/pull/quay
 envValues:
   - envVar: BUSYBOX_SECRET_VARIABLE
     secret: jobs/demo/demovalue
@@ -28,7 +28,7 @@ builds:
     shell: /bin/bash
   - image: bash:latest
     commands: |
-      echo "test from inline" > testfrominline.txt
+      echo "echo \"test from inline: running in ${PIPELINE_WORKSPACE}\" > testfrominline.sh
     shell: /bin/bash
   - image: maratoid/pipeline-demo
     buildArgs: 
@@ -36,6 +36,8 @@ builds:
         env: GIT_COMMIT
       - arg: JOB_NAME
         env: JOB_NAME
+      - arg: SECRET_ARG
+        secret: jobs/demo/demovalue
     context: pipeline-demo
     dockerContext: .
     chart: pipeline-demo
@@ -70,6 +72,7 @@ deployments:
           script: scripts/stageTest.sh
         - image: quay.io/maratoid/helm:latest
           commands: |
+            echo "Testing KUBECONFIG (${KUBECONFIG}) injection:" 
             kubectl version
             kubectl get po -n pipeline-tools
     prod: 
@@ -118,9 +121,9 @@ stage:
   namespace: staging
   cluster: secret/staging-cluster/config
   deploy: true
-#  beforeScript:
-#    script: scripts/stageBefore.sh
-#    shell: /bin/bash
+  beforeScript:
+    script: scripts/stageBefore.sh
+    shell: /bin/bash
   afterScript:
     image: alpine:latest
     commands: |
@@ -146,5 +149,3 @@ prod:
     image: alpine:latest
     script: scripts/prodAfter.sh 
   doDeploy: auto
-
- 
