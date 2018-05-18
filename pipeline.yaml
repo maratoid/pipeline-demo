@@ -1,15 +1,15 @@
 type: chart
 beforeScript:
   script: scripts/globalBefore.sh
-#afterScript:
-#  image: alpine:latest
-#  script: scripts/globalAfter.sh
-#pullSecrets:
-#  - name: quay
-#    server: quay.io
-#    username: maratoid
-#    email: maratoid@gmail.com
-#    password: secret/pull/quay
+afterScript:
+  image: alpine:latest
+  script: scripts/globalAfter.sh
+pullSecrets:
+  - name: quay
+    server: quay.io
+    username: maratoid
+    email: maratoid@gmail.com
+    password: secret/pull/quay
 envValues:
   - envVar: BUSYBOX_SECRET_VARIABLE
     secret: jobs/demo/demovalue
@@ -23,12 +23,21 @@ helmRepos:
   - name: incubator
     url: https://kubernetes-charts-incubator.storage.googleapis.com
 builds:
+  - image: bash:latest
+    script: scripts/generatefile.sh
+    shell: /bin/bash
+  - image: bash:latest
+    commands: |
+      echo "echo \"test from inline: running in ${PIPELINE_WORKSPACE}\"" > testfrominline.sh
+    shell: /bin/bash
   - image: maratoid/pipeline-demo
     buildArgs: 
       - arg: GIT_COMMIT
         env: GIT_COMMIT
       - arg: JOB_NAME
         env: JOB_NAME
+      - arg: SECRET_ARG
+        secret: jobs/demo/demovalue
     context: pipeline-demo
     dockerContext: .
     chart: pipeline-demo
@@ -61,7 +70,11 @@ deployments:
       tests:
         - image: bash:latest
           script: scripts/stageTest.sh
-          shell: /bin/bash
+        - image: quay.io/maratoid/helm:latest
+          commands: |
+            echo "Testing KUBECONFIG (${KUBECONFIG}) injection:" 
+            kubectl version
+            kubectl get po -n pipeline-tools
     prod: 
       values:
         - key: pipeline.secretval
@@ -105,6 +118,7 @@ test:
     image: alpine:latest
     script: scripts/testAfter.sh
 stage:
+  namespace: staging
   cluster: secret/staging-cluster/config
   deploy: true
   beforeScript:
@@ -112,8 +126,21 @@ stage:
     shell: /bin/bash
   afterScript:
     image: alpine:latest
-    script: scripts/stageAfter.sh    
+    commands: |
+      echo "THIS IS STAGE AFTER SCRIPT EXECUTING"
+      echo "INJECTED VARS"
+      echo "BUSYBOX_SECRET_VARIABLE is $BUSYBOX_SECRET_VARIABLE"
+      echo "BUSYBOX_PLAIN_VARIABLE is $BUSYBOX_PLAIN_VARIABLE"
+
+      echo "PIPELINE VARIABLES"
+      echo "PIPELINE_PROD_NAMESPACE is $PIPELINE_PROD_NAMESPACE"
+      echo "PIPELINE_STAGE_NAMESPACE is $PIPELINE_STAGE_NAMESPACE"
+      echo "PIPELINE_BUILD_ID is $PIPELINE_BUILD_ID"
+      echo "PIPELINE_JOB_NAME is $PIPELINE_JOB_NAME"
+      echo "PIPELINE_BUILD_NUMBER is $PIPELINE_BUILD_NUMBER"
+      echo "PIPELINE_WORKSPACE is $PIPELINE_WORKSPACE"   
 prod: 
+  namespace: prod
   cluster: secret/prod-cluster/config
   beforeScript:
     script: scripts/prodBefore.sh
@@ -122,5 +149,3 @@ prod:
     image: alpine:latest
     script: scripts/prodAfter.sh 
   doDeploy: auto
-
- 
