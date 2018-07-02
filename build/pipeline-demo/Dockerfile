@@ -18,6 +18,7 @@ RUN chmod +x /testfrominline.sh
 RUN /testfromscript.sh
 RUN /testfrominline.sh
 
+
 COPY scripts/dockerScript.sh /dockerScript.sh
 RUN chmod +x dockerScript.sh
 RUN /dockerScript.sh
