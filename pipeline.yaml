@@ -18,8 +18,6 @@ configs:
 #     image: golang:1.8.3
 #     shell: /bin/bash
 #     script: ./pipeline_wrapper_verify.sh
-
-
 prod:
   doDeploy: none
 
