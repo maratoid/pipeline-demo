@@ -23,6 +23,11 @@ prod:
   doDeploy: none
 
 
+cveScan:
+  maxCritical: 0
+  Ignore: False
+
+
 
 
 
