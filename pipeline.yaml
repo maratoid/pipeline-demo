@@ -23,12 +23,6 @@ prod:
   doDeploy: none
 
 
-cveScan:
-  maxCve: 0
-  maxLevel: Medium
-  ignore: False
-
-
 
 
 
