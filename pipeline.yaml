@@ -24,8 +24,8 @@ prod:
 
 
 cveScan:
-  maxCritical: 0
-  maxHigh: 0
+  maxCve: 0
+  maxLevel: Medium
   ignore: True
 
 
