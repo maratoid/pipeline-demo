@@ -42,6 +42,19 @@ builds:
     dockerContext: .
     chart: pipeline-demo
     value: images.image
+  - image: maratoid/pipeline-demo
+    buildArgs: 
+      - arg: GIT_COMMIT
+        env: GIT_COMMIT
+      - arg: JOB_NAME
+        env: JOB_NAME
+      - arg: SECRET_ARG
+        secret: jobs/demo/demovalue
+    context: pipeline-demo
+    locationOverride: build
+    dockerContext: .
+    chart: pipeline-demo
+    value: images.image
 deployments:
   - chart: pipeline-demo
     timeout: 600
