@@ -42,6 +42,9 @@ builds:
     dockerContext: .
     chart: pipeline-demo
     value: images.image
+  - image: maratoid/pipeline-demo-cmd
+    context: pipeline-cmd
+    locationOverride: cmd
 deployments:
   - chart: pipeline-demo
     timeout: 600
