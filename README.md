@@ -1,2 +1,2 @@
 # pipeline-demo
-Pipeline demo.
+Pipeline demo
