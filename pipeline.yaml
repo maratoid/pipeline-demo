@@ -4,15 +4,19 @@ rootfs:
     context: pipeline-demo
     chart: pipeline-demo
     value: images.image
-  - image: maratoid/pipeline-demo-cmd
-    context: pipeline-cmd
-    locationOverride: cmd
+  # - image: maratoid/pipeline-demo-cmd
+  #   context: pipeline-cmd
+  #   locationOverride: cmd
 deployments:
 configs:
   - chart: pipeline-demo
     timeout: 600
     retries: 2
     release: pipeline-demo
+cveScan:
+  maxCve: 0
+  maxLevel: Medium
+  ignore: False
 # test:
 #   beforeScript:
 #     image: golang:1.8.3
