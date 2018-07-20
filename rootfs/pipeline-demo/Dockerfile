@@ -1,0 +1,11 @@
+FROM busybox
+LABEL authors="Marat Garafutdinov<maratoid@gmail.com>"
+
+ARG GIT_COMMIT=SOME-DEFAULT
+ARG JOB_NAME=SOME-DEFAULT
+ARG SECRET_ARG=SOME-DEFAULT
+
+RUN echo "GIT_COMMIT=${GIT_COMMIT}"
+RUN echo "JOB_NAME=${JOB_NAME}"
+RUN echo "SECRET_ARG=${SECRET_ARG}"
+CMD ["sh"]
