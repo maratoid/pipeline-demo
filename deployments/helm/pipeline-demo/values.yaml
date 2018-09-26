@@ -5,7 +5,7 @@ pipeline:
   secretval: set-me
   plainval: set-me
 images:
-  image: quay.io/maratoid/pipeline-demo:0.0.5
+  image: quay.io/maratoid/pipeline-demo:0.0.6
   pullPolicy: IfNotPresent
 service:
   name: busybox
