@@ -1,19 +1,11 @@
 replicaCount: 1
-# ingress set as:
-# internal-ingress:
-#   name: internal-prod-ingress
-#   key: val
-#   otherkey: val
-# friendlyname:
-#   name: friendly-name-ingress
-#   key: val
-#   otherkey: val
-ingress: {}
-pipeline: 
+ingress: {
+  }
+pipeline:
   secretval: set-me
   plainval: set-me
 images:
-  image: quay.io/maratoid/pipeline-demo:prod
+  image: quay.io/maratoid/pipeline-demo:0.0.5
   pullPolicy: IfNotPresent
 service:
   name: busybox
