@@ -6,7 +6,7 @@ pipeline:
   plainval: set-me
 images:
   image: quay.io/maratoid/pipeline-demo
-  tag: 0.1.0
+  tag: 0.1.1
   pullPolicy: IfNotPresent
 service:
   name: busybox
