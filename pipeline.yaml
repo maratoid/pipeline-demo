@@ -41,7 +41,7 @@ builds:
     context: pipeline-demo
     dockerContext: .
     chart: pipeline-demo
-    value: images.image
+    tagValue: images.tag
   - image: maratoid/pipeline-demo-cmd
     context: pipeline-cmd
     locationOverride: cmd

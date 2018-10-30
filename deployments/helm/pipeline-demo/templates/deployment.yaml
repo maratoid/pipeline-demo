@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.images.image }}"
+        image: "{{ .Values.images.image }}:{{ .Values.images.tag }}"
         imagePullPolicy: {{ .Values.images.pullPolicy }}
         ports:
         - containerPort: {{ .Values.service.internalPort }}

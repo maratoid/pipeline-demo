@@ -7,6 +7,6 @@ metadata:
 spec:
   containers:
     - name: "{{.Release.Name}}-smoke-test"
-      image: "{{ .Values.images.image }}"
+      image: "{{ .Values.images.image }}:{{ .Values.images.tag }}"
       command: ["true"]
   restartPolicy: Never
