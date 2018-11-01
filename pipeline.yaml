@@ -49,6 +49,7 @@ deployments:
   - chart: pipeline-demo
     timeout: 600
     retries: 2
+    setAppVersion: true
     release: pipeline-demo
     test: 
       values:
